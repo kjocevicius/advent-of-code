@@ -1,15 +1,29 @@
-//Incomplete
-
+// https://adventofcode.com/2018/day/3
 
 var lineReader = require('readline').createInterface({
     input: require('fs').createReadStream('day3input.txt')
 });
 
-var result = 0;
-var cuts = [];
+const cuts = [];
+const usedCoordinates = new Set();
+const overlappingCoordinates = new Set();
+
+function processCut(cut) {
+    for (let x = cut.x; x < cut.x + cut.w; x++) {
+        for (let y = cut.y; y < cut.y + cut.h; y++) {
+            const coordString = `${x}:${y}`;
+            if (usedCoordinates.has(coordString)) {
+                overlappingCoordinates.add(coordString);
+            } else {
+                usedCoordinates.add(coordString);
+            }
+        }   
+    }
+}
 
 function calculateOverlaps() {
-    //TODO
+    cuts.forEach(processCut);
+    return overlappingCoordinates.size;
 }
 
 lineReader.on('line', function (line) {
@@ -18,15 +32,14 @@ lineReader.on('line', function (line) {
     const sizeSplit = split1[3].split('x');
     cuts.push({
         id: split1[0].slice(1),
-        x: coordinatesSplit[0],
-        y: coordinatesSplit[1],
-        w: sizeSplit[0],
-        h: sizeSplit[1],
+        x: Number.parseInt(coordinatesSplit[0]),
+        y: Number.parseInt(coordinatesSplit[1]),
+        w: Number.parseInt(sizeSplit[0]),
+        h: Number.parseInt(sizeSplit[1]),
     });
 });
 
-lineReader.on('close', function (line) {
+lineReader.on('close', function () {
     var overlaps = calculateOverlaps();
-    console.log(cuts[0]);
-    console.log(overlaps);
+    console.log('Result: ', overlaps);
 });
