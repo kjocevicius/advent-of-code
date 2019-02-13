@@ -1,5 +1,7 @@
 // https://adventofcode.com/2018/day/4
 
+const INPUT_FILE = 'day4input.txt';
+
 const allRecords = [];
 
 function findMostSleeptMinuteByGuard() {
@@ -22,9 +24,13 @@ function findMostSleeptMinuteByGuard() {
         } else if (r.type === 'wakes') {
             minuteWakes = r.minute;
 
-            const record = sleepingRecords[guardId] = sleepingRecords[guardId] | [];
+            if (!sleepingRecords[guardId]) {
+                sleepingRecords[guardId] = {};
+            }
+
+            const record = sleepingRecords[guardId];
             for (let j = minuteFalls; j < minuteWakes; j++) {
-                record[j]++;
+                record[j] = (record[j] || 0) + 1;
                 if (resultRepeatMinutes < record[j]) {
                     resultRepeatMinutes = record[j];
                     resultMinute = j;
@@ -41,13 +47,13 @@ function processRecords() {
     allRecords.sort((r1, r2) => r1.record > r2.record ? 1 : -1 );
 
     const mostSleptMinuteByGuard = findMostSleeptMinuteByGuard();
-    // const result = mostSleptMinute * mostSleepingGuard;
+    const result = mostSleptMinuteByGuard.resultMinute * mostSleptMinuteByGuard.resultGuard;
     console.log(`Most slept minute by guard: ${JSON.stringify(mostSleptMinuteByGuard)}`);
-    // console.log(`Result: ${result}`);
+    console.log(`Result: ${result}`);
 }
 
 var lineReader = require('readline').createInterface({
-    input: require('fs').createReadStream('day4input.1.txt')
+    input: require('fs').createReadStream(INPUT_FILE)
 });
 
 lineReader.on('line', function (line) {

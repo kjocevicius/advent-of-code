@@ -1,5 +1,7 @@
 // https://adventofcode.com/2018/day/4
 
+const INPUT_FILE = 'day4input.txt';
+
 const allRecords = [];
 const sleepingRecords = {};
 
@@ -65,7 +67,7 @@ function processRecords() {
 }
 
 var lineReader = require('readline').createInterface({
-    input: require('fs').createReadStream('day4input.txt')
+    input: require('fs').createReadStream(INPUT_FILE)
 });
 
 lineReader.on('line', function (line) {
