@@ -11,10 +11,15 @@ function processCoordinates() {
         yMin: Math.min(...coordinates.map(v => v.y)),
         yMax: Math.max(...coordinates.map(v => v.y)),
     };
-    coordinates.forEach(c => {
-        // if ()
-    });
     console.log(limits)
+
+    for (x = limits.xMin; x <= limits.xMax; x++) {
+        for (y = limits.yMin; y <= limits.yMax; y++) {
+            coordinates.forEach(c => {
+                // if ()
+            });
+        }
+    } 
 }
 
 var lineReader = require('readline').createInterface({
