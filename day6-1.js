@@ -1,9 +1,8 @@
 // https://adventofcode.com/2018/day/5
 
-const INPUT_FILE = 'day6input.1.txt';
+const INPUT_FILE = 'day6input.txt';
 
 let coordinates = [];
-let areas = [];
 
 function getLimits(coordinates) {
     const result = {
@@ -39,19 +38,46 @@ function getAreasMap(coordinates, limits) {
             areasMap[x - limits.xMin][y - limits.yMin] = minDistanceCoordinateId;
         }
     }
-    console.log(areasMap);
+    // console.log('areasMap', areasMap);
     return areasMap;
 }
 
-function eliminateEdges(areasMap, limits) {
+function findEdgeAreas(areasMap, limits) {
+    const edgeIds = new Set();
+    for (let x = 0; x < limits.width; x++) {
+        edgeIds.add(areasMap[x][0]);
+    }
+    for (let y = 0; y < limits.width; y++) {
+        edgeIds.add(areasMap[0][y]);
+    }
 
+    const result = [...edgeIds].filter(v => v !== undefined);
+    console.log('Edges: ', result);
+    return result;
+}
+
+function calculateAreasSizes(areasMap, limits) {
+    for (let x = 0; x < limits.width; x++) {
+        for (let y = 0; y < limits.height; y++) {
+            const areaId = areasMap[x][y];
+            if (areaId !== undefined) {
+                coordinates[areaId].size++;
+            }
+        }
+    }
 }
 
 function processCoordinates() {
     const limits = getLimits(coordinates);
     const areasMap = getAreasMap(coordinates, limits);
+    const edgeIds = findEdgeAreas(areasMap, limits);
+    calculateAreasSizes(areasMap, limits);
+    const nonEdgeSizes = coordinates
+        .filter((v, i) => !edgeIds.includes(i))
+        .map(v => v.size);
+    const largestSize = Math.max(...nonEdgeSizes);
 
-
+    console.log(largestSize);
 }
 
 var lineReader = require('readline').createInterface({
@@ -60,10 +86,9 @@ var lineReader = require('readline').createInterface({
 
 lineReader.on('line', function (line) {
     const coords = line.split(', ').map(v => parseInt(v));
-    coordinates.push({x: coords[0], y: coords[1]});
+    coordinates.push({x: coords[0], y: coords[1], size: 0});
 });
 
 lineReader.on('close', function () {
-    console.log(coordinates)
     processCoordinates();
 });
