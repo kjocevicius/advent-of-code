@@ -22,10 +22,24 @@ var result = 0;
 
 lineReader.on('line', function (line) {
     const mass = Number.parseInt(line);
-    const fuel = Math.floor(mass / 3) - 2;
+    const fuel = fuelForMassFull(fuelForMass(mass));
     result += fuel;
 });
 
 lineReader.on('close', function (line) {
     console.log('Result:', result);
 });
+
+function fuelForMass(mass) {
+    return Math.floor(mass / 3) - 2;
+}
+
+function fuelForMassFull(mass) {
+    let sumOfMass = 0;
+    let remainingMass = mass;
+    while (remainingMass > 0) {
+        sumOfMass += remainingMass;
+        remainingMass = fuelForMass(remainingMass);
+    }
+    return sumOfMass;
+}
