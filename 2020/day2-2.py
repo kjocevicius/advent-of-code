@@ -5,7 +5,8 @@ class PasswordData(object):
     position1: str = ""
     position2: str = ""
 
-def parse_passwords(lines):
+
+def parse_passwords(lines: list):
     result = []
     for line in lines: 
         passwordData = PasswordData()
@@ -23,7 +24,7 @@ def parse_passwords(lines):
         result.append(passwordData)
     return result
 
-def solve(passwordDatas):
+def solve(passwordDatas: list):
     result = []
     for passwordData in passwordDatas:
         letterAt1 = passwordData.password[passwordData.position1]
