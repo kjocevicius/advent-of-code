@@ -34,7 +34,7 @@ def solve(passwordDatas):
     return result
 
 
-input_file = open("day2.input", "r")
+input_file = open("2020/day2.input", "r")
 content_list = input_file.readlines()
 passwordsData = parse_passwords(content_list)
 result = solve(passwordsData)

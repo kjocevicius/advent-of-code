@@ -1,6 +1,6 @@
 
 
-input_file = open("day1.input", "r")
+input_file = open("2020/day1.input", "r")
 content_list = input_file.readlines()
 
 for i in range(0, len(content_list)): 
