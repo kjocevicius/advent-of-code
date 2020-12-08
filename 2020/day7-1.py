@@ -4,7 +4,7 @@
 def readRules(lines):
     result = dict()
     for line in lines:
-        line = line.strip()
+        line = line.strip().replace(" bags", "").replace(" bag", "")
         split = line.split(" contain ")
         container = split[0]
         containees = split[1].replace('.', '').split(", ")
@@ -16,11 +16,27 @@ def readRules(lines):
 
     return result
 
-def findOutermostBags(rules, bagColor):
+def findOutermostBagsColors(rules, bagColor, depth = 0, outerColors = set([])):
     # TODO
-    print("not done yet")
+    nextDepth = depth + 1
 
-input_file = open("2020/day7-dummy.input", "r")
+    if depth > 0:
+        outerColors.add(bagColor)
+
+    if (bagColor in rules):
+        containers = rules[bagColor]
+        for c in containers:
+            if c[0] == "no" or int(c[0]) == 0:
+                continue
+            
+            findOutermostBagsColors(rules, c[1], nextDepth, outerColors)
+
+    return outerColors
+
+myBagColor = "shiny gold"
+input_file = open("2020/day7.input", "r")
 content_list = input_file.readlines()
 rules = readRules(content_list)
-print(rules)
+# print(rules, myBagColor)
+outermostColors = findOutermostBagsColors(rules, myBagColor)
+print(len(outermostColors))
