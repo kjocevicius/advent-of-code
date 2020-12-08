@@ -10,9 +10,6 @@ def executeProgramUntilRepeat(program):
     while (programPointer >= 0 and programPointer < programLen):
         if (programPointer in programPointerHistory):
             previousPointer = programPointerHistory[len(programPointerHistory)-1]
-            # print("Loop happened on PP: ", programPointer)
-            # print("programPointerHistory: ", programPointerHistory)
-            # print("Previous pointer: ", previousPointer)
             return programPointerHistory
 
         programPointerHistory.append(programPointer)
@@ -33,21 +30,6 @@ def executeProgramUntilRepeat(program):
 
     print("Program completed!", acc)
     return acc
-
-# def fixProgram(program, errorIndex):
-#     command = program[errorIndex]
-#     print("Fixing command: ", command)
-#     if (command.startswith("jmp")):
-#         command = command.replace("jmp", "nop")
-#     elif command.startswith("nop"):
-#         command = command.replace("nop", "jmp")
-#     else:
-#         raise Exception("Unknown command: " + command)
-
-#     program = program.copy()
-#     program[errorIndex] = command
-#     return program
-
 
 def fixProgram(program, executionHistory):
 
@@ -72,7 +54,6 @@ def fixProgram(program, executionHistory):
     raise Exception("No success fixing program :(")
 
 
-myBagColor = "shiny gold"
 input_file = open("2020/day8.input", "r")
 content_list = input_file.readlines()
 

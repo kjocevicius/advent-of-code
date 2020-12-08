@@ -22,7 +22,6 @@ def executeProgramUntilRepeat(program):
 
     return acc
 
-myBagColor = "shiny gold"
 input_file = open("2020/day8.input", "r")
 content_list = input_file.readlines()
 result = executeProgramUntilRepeat(content_list)
