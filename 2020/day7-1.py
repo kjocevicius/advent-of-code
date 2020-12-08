@@ -17,7 +17,6 @@ def readRules(lines):
     return result
 
 def findOutermostBagsColors(rules, bagColor, depth = 0, outerColors = set([])):
-    # TODO
     nextDepth = depth + 1
 
     if depth > 0:
