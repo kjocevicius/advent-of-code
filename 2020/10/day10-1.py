@@ -10,7 +10,6 @@ def get_diffs(numbers: list[int]) -> list[int]:
     return result
 
 
-PREAMBLE_LEN = 25
 input_file = open("2020/10/day10.input", "r")
 content_list = input_file.readlines()
 numbers_list = list(map(int, content_list))
