@@ -8,17 +8,19 @@ def loadNumbers(content_lines):
     print("loaded numbers: ", len(numbers_list))
     return numbers_list
 
+
 def isValidNumber(number, numbers_list, pre_range):
     for i in pre_range:
         for j in pre_range:
             if i == j:
                 continue
-            
+
             sum = numbers_list[i] + numbers_list[j]
 
             if number == sum:
                 return True
     return False
+
 
 def validateNumbers(numbers_list, preamble_len):
     for i in range(preamble_len, len(numbers_list)):

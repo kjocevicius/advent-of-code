@@ -9,13 +9,14 @@ def executeProgramUntilRepeat(program):
 
     while (programPointer >= 0 and programPointer < programLen):
         if (programPointer in programPointerHistory):
-            previousPointer = programPointerHistory[len(programPointerHistory)-1]
+            previousPointer = programPointerHistory[len(
+                programPointerHistory)-1]
             return programPointerHistory
 
         programPointerHistory.append(programPointer)
         command = program[programPointer]
         command = command.split(" ")
-        
+
         if command[0] == "nop":
             programPointer += 1
         elif command[0] == "jmp":
@@ -30,6 +31,7 @@ def executeProgramUntilRepeat(program):
 
     print("Program completed!", acc)
     return acc
+
 
 def fixProgram(program, executionHistory):
 

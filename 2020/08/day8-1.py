@@ -9,7 +9,7 @@ def executeProgramUntilRepeat(program):
     while (programPointer not in programPointerHistory):
         programPointerHistory.add(programPointer)
         command = program[programPointer].split(" ")
-        
+
         if command[0] == "nop":
             programPointer += 1
         elif command[0] == "jmp":
@@ -21,6 +21,7 @@ def executeProgramUntilRepeat(program):
             programPointer += 1
 
     return acc
+
 
 input_file = open("2020/day8.input", "r")
 content_list = input_file.readlines()

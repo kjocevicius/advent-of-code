@@ -28,8 +28,6 @@ def findContiguousSetForNumber(numbers_list, invalid_number):
 
             if sumOfSet == invalid_number:
                 return setOfNumbers
-            
-            
 
 
 INVALID_NUMBER = 731031916
