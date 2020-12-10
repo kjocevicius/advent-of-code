@@ -1,18 +1,25 @@
 
-def loadNumbers(content_lines):
-    numbers_list = []
+def get_diffs(numbers: list[int]) -> list[int]:
+    result = []
+    previous = numbers[0]
+    for i in range(1, len(numbers)):
+        v = numbers[i]
+        result.append(v - previous)
+        previous = v
 
-    for line in content_list:
-        numbers_list.append(int(line))
-
-    print("loaded numbers: ", len(numbers_list))
-    return numbers_list
+    return result
 
 
 PREAMBLE_LEN = 25
 input_file = open("2020/10/day10.input", "r")
 content_list = input_file.readlines()
-numbers_list = loadNumbers(content_list)
+numbers_list = list(map(int, content_list))
+numbers_list.sort()
+numbers_diffs = get_diffs(numbers_list)
 
+jolts_1_count = numbers_diffs.count(1) + 1
+jolts_3_count = numbers_diffs.count(3) + 1
+jolts_multiplied = jolts_1_count * jolts_3_count
 
-print(numbers_list)
+print(jolts_1_count, jolts_3_count)
+print(jolts_multiplied)
