@@ -1,4 +1,6 @@
 
+combinations_memo = {}
+
 
 def find_combinations(numbers: list[int], targetJolt: int, currentJolt: int = 0, lastAdapterIndex: int = 0):
     nextAdapterIndex = lastAdapterIndex
@@ -18,8 +20,11 @@ def find_combinations(numbers: list[int], targetJolt: int, currentJolt: int = 0,
         elif nextJolt == targetJolt:
             combinations += 1
         else:
-            combinations += find_combinations(numbers,
-                                              targetJolt, nextJolt, nextAdapterIndex)
+            if nextAdapterIndex not in combinations_memo:
+                combinations_memo[nextAdapterIndex] = find_combinations(
+                    numbers, targetJolt, nextJolt, nextAdapterIndex)
+
+            combinations += combinations_memo[nextAdapterIndex]
 
     return combinations
 
