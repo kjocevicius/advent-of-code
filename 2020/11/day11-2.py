@@ -1,19 +1,32 @@
 
+directions_counters = [
+    lambda x, y, delta: [x - delta, y],  # <-
+    lambda x, y, delta: [x + delta, y],  # ->
+    lambda x, y, delta: [x, y - delta],  # /\
+    lambda x, y, delta: [x, y + delta],  # \/
+    lambda x, y, delta: [x + delta, y - delta],  # /^
+    lambda x, y, delta: [x - delta, y - delta],  # ^\
+    lambda x, y, delta: [x - delta, y + delta],  # _/
+    lambda x, y, delta: [x + delta, y + delta],  # \_
+]
+
+
 def calculate_adjacent_taken_pos(plane_map: list[list], x, y):
     occupied_seats = 0
-    for hx in range(x-1, x+2):
-        if hx < 0 or hx >= len(plane_map[0]):
-            continue
-        for hy in range(y-1, y+2):
-            if hx == x and hy == y:
-                continue
-            if hy < 0 or hy >= len(plane_map):
-                continue
+    for directionInc in directions_counters:
+        delta = 0
+        visibleSeat = None
+        while (visibleSeat in [None, '.']):
+            delta += 1
+            coords = directionInc(x, y, delta)
 
-            value = plane_map[hy][hx]
+            if coords[0] < 0 or coords[0] >= len(plane_map[y]) or coords[1] < 0 or coords[1] >= len(plane_map):
+                break
 
-            if value == '#':
-                occupied_seats += 1
+            visibleSeat = plane_map[coords[1]][coords[0]]
+
+        if visibleSeat == '#':
+            occupied_seats += 1
 
     return occupied_seats
 
@@ -33,7 +46,7 @@ def switching_round(plane_map: list[list]):
             if status == 'L' and occupied_seats == 0:
                 plane_map[y][x] = '#'
                 changes_count += 1
-            elif status == '#' and occupied_seats >= 4:
+            elif status == '#' and occupied_seats >= 5:
                 plane_map[y][x] = 'L'
                 changes_count += 1
 
